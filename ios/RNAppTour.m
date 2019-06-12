@@ -164,6 +164,11 @@ RCT_EXPORT_METHOD(ShowFor:(nonnull NSNumber *)view props:(NSDictionary *)props)
         }
     }
 
+    if ([props objectForKey:@"useRectangle"] != nil) {
+        bool useRectangle = [[props objectForKey:@"useRectangle"] boolValue];
+        [materialShowcase setUseRectangle: useRectangle];
+    }
+
     if ([props objectForKey:@"cancelable"] != nil) {
         BOOL *cancelable = [[props objectForKey:@"cancelable"] boolValue];
         [materialShowcase setIsTapRecognizerForTargetView: !cancelable];

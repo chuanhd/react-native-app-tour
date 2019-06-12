@@ -220,12 +220,14 @@ public class RNAppTourModule extends ReactContextBaseJavaModule {
         // Other Props
         float outerCircleAlpha = 0.96f;
         int titleTextSize = 20;
-        int descriptionTextSize = 10;
+        int descriptionTextSize = 18;
         boolean drawShadow = true;
         boolean cancelable = true;
         boolean tintTarget = true;
         boolean transparentTarget = true;
         int targetRadius = 44;
+        boolean useViewBounds = false;
+        boolean useRectangle = false;
 
         try {
             outerCircleAlpha = (float) props.getDouble("outerCircleAlpha");
@@ -259,14 +261,18 @@ public class RNAppTourModule extends ReactContextBaseJavaModule {
             targetRadius = props.getInt("targetRadius");
         } catch (Exception e) {
         }
+        try {
+            useRectangle = props.getBoolean("useRectangle");
+        } catch (Exception e) {
+        }
 
         // Populate Props
-        // TapTarget targetView = TapTarget.forView(view, title, description);
-        int[] points = new int[2];
-        view.getLocationOnScreen(points);
-        Rect rectBonds = new Rect(points[0], points[1], points[0] + view.getWidth(), points[1] + view.getHeight());
+        TapTarget targetView = TapTarget.forView(view, title, description);
+        // int[] points = new int[2];
+        // view.getLocationOnScreen(points);
+        // Rect rectBonds = new Rect(points[0], points[1], points[0] + view.getWidth(), points[1] + view.getHeight());
 
-        TapTarget targetView = TapTarget.forBounds(rectBonds, title, description);
+        // TapTarget targetView = TapTarget.forBounds(rectBonds, title, description);
 
         if (outerCircleColor != null && outerCircleColor.length() > 0)
             targetView.outerCircleColorInt(Color.parseColor(outerCircleColor));
@@ -293,6 +299,7 @@ public class RNAppTourModule extends ReactContextBaseJavaModule {
         targetView.tintTarget(tintTarget);
         targetView.transparentTarget(transparentTarget);
         targetView.targetRadius(targetRadius);
+        targetView.useRectangle(useRectangle);
 
         return targetView;
     }
